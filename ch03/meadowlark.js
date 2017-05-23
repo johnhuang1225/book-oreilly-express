@@ -8,6 +8,8 @@ var handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+var names = require('./lib/names');
+
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
@@ -16,7 +18,8 @@ app.get('/', function(req, res){
     res.render('home');
 });
 app.get('/about', function(req, res){
-    res.render('about');
+    var name = names.getRandomName();
+    res.render('about', {name: name});
 });
 
 app.use(function(req, res, next){
